@@ -1,0 +1,54 @@
+pipeline {
+    agent {
+        kubernetes {
+            cloud 'team5-eks'
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              serviceAccountName: jenkins-admin
+            """
+        }
+    }
+    environment {
+        APP_NAME = "flask-app"
+    }
+
+    stages {
+        stage("Checkout from SCM") {
+               steps {
+                   git branch: 'pjt', credentialsId: 'pjt-githubtoken', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+               }
+        }
+
+        stage("Update the Deployment Tags") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/test-python/test-python') {
+                        sh """
+                        cat deployment.yaml
+                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                        cat deployment.yaml
+                        """
+                    }
+                }
+            }
+        }
+
+        stage("Push the changed deployment file to Git") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/test-python/test-python') {
+                        sh """
+                        git add deployment.yaml
+                        git commit -m "Updated Deployment Manifest"
+                        """
+                        withCredentials([gitUsernamePassword(credentialsId: 'pjt-githubtoken', gitToolName: 'Default')]) {
+                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration pjt"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
