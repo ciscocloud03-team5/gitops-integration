@@ -86,7 +86,7 @@ pipeline {
 stage('build and test') {
     steps {
         container('golang') {
-            dir('/home/jenkins/agent/workspace/gitops-integration/nginx-golang') {
+            dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') {
                 script {
                     
                     sh 'pwd'
@@ -107,7 +107,7 @@ stage('build and test') {
             steps {
                 container('docker') {
                     script {
-                        dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') { // 작업 디렉토리 설정
+                        dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') { // 작업 디렉토리 설정
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:latest .' // Docker 이미지 빌드(latest 태그)
                             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // Docker 로그인
