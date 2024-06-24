@@ -80,13 +80,20 @@ pipeline {
         stage('Run Tests') { // 테스트 실행 단계
             steps {
                 container('golang') {
-                    script {
-                        dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') { // 작업 디렉토리 설정
-                            sh 'pwd'
-                            sh 'ls -al'
-                            sh 'go test ./...' // 모든 테스트 실행
-                        }
-                    }
+                script {
+                    // Go 모듈 초기화
+                    sh 'go mod init github.com/ciscocloud03-team5/gitops-integration'
+
+                    // Go 모듈 의존성 설치
+                    sh 'go get ./...'
+
+                    // 현재 위치 및 파일 리스트 확인
+                    sh 'pwd'
+                    sh 'ls -al'
+
+                    // 테스트 실행
+                    sh 'go test ./...'
+                }
                 }
             }
         }
