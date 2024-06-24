@@ -89,9 +89,7 @@ stage('build and test') {
             dir('/home/jenkins/agent/workspace/gitops-integration/nginx-golang') {
                 script {
                     
-                    pwd
-                    ls -al
-
+                    sh 'pwd'
                     sh 'ls -al'
                     sh 'cat go.mod'
                     sh 'go get -v ./...'
