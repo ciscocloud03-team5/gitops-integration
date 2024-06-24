@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     app: flaskapp
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: flask-5000
       port: 5000
