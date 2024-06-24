@@ -66,11 +66,10 @@ pipeline {
                     sh 'pwd'
                     sh 'ls -al'
                     sh 'ls -al nginx-golang'
-                    git( 
-                        sh 'git checkout refs/heads/cjh'                // 브랜치 이름 
-                        credentialsId: 'icebrakerrr'     // GitHub 자격증명 사용
+                    git credentialsId: 'icebrakerrr'     // GitHub 자격증명 사용
                         url: 'https://github.com/ciscocloud03-team5/gitops-integration' // GitHub 리포지토리 URL
-                    )
+                        branch: 'cjh'
+                    sh 'git checkout refs/heads/cjh' 
                     
                 }
             }
