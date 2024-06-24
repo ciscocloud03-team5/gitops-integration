@@ -80,13 +80,15 @@ pipeline {
         stage('build and test') { // 테스트 실행 단계
             steps {
                 container('golang') {
+                    script {
+                        sh 'git checkout cjh'
+                    }
                     dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
                         script {
-                            // Go 모듈 초기화
-                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration@cjh'
+                           sh 'cat go.mod'
 
                             // Go 모듈 의존성 설치
-                            sh 'go get ./...'
+                            sh 'go get -v ./...'
 
                             // 현재 위치 및 파일 리스트 확인
                             sh 'pwd'
