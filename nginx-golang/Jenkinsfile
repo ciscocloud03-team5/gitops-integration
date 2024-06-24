@@ -83,28 +83,24 @@ pipeline {
         
 
 
-        stage('build and test') { // 테스트 실행 단계
-            steps {
-                container('golang') {
-                    dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
-                        script {
-                           sh 'cat go.mod'
-
-                            // Go 모듈 의존성 설치
-                            sh 'go get -v ./...'
-
-                            // 현재 위치 및 파일 리스트 확인
-                            sh 'pwd'
-                            sh 'ls -al'
-
-                            
-                            sh 'go list ./...' // 패키지 목록 출력
-                            sh 'go test ./...'  // 테스트 실행
-                        }
-                    }
+stage('build and test') {
+    steps {
+        container('golang') {
+            dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {
+                script {
+                    sh 'cat go.mod'
+                    sh 'go get -v ./...'
+                    sh 'pwd'
+                    sh 'ls -al'
+                    sh 'go list ./...'
+                    sh 'go test ./...'
+                }
             }
         }
-        }
+    }
+}
+
+
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
             steps {
                 container('docker') {
