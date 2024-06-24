@@ -65,10 +65,8 @@ pipeline {
                     sh 'ls -al'
                     sh 'ls -al nginx-golang'
                     git credentialsId: 'icebrakerrr', // GitHub 자격증명 사용
-                        url: 'https://github.com/ciscocloud03-team5/gitops-integration.git', // GitHub 리포지토리 URL
-                        branch: 'cjh' // 브랜치 이름
-                    sh 'ls -al'
-                    sh 'ls -al nginx-golang'
+                    url: 'https://github.com/ciscocloud03-team5/gitops-integration.git', // GitHub 리포지토리 URL
+                    branch: 'cjh' // 브랜치 이름
                     
                 }
             }
