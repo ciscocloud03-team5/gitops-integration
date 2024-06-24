@@ -77,7 +77,7 @@ pipeline {
                         url: 'https://github.com/ciscocloud03-team5/gitops-integration', // GitHub 리포지토리 URL
                         branch: 'cjh'
                     sh 'git checkout refs/heads/cjh' 
-                    
+                    sh 'ls -al'
                 }
             }
         
