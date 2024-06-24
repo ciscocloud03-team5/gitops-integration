@@ -77,23 +77,23 @@ pipeline {
         
 
 
-        stage('Run Tests') { // 테스트 실행 단계
+        stage('build and test') { // 테스트 실행 단계
             steps {
                 container('golang') {
-                 dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
-                    script {
-                        // Go 모듈 초기화
-                        sh 'go mod init github.com/ciscocloud03-team5/gitops-integration'
+                    dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
+                        script {
+                            // Go 모듈 초기화
+                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration'
 
-                        // Go 모듈 의존성 설치
-                        sh 'go get ./...'
+                            // Go 모듈 의존성 설치
+                            sh 'go get ./...'
 
-                        // 현재 위치 및 파일 리스트 확인
-                        sh 'pwd'
-                        sh 'ls -al'
+                            // 현재 위치 및 파일 리스트 확인
+                            sh 'pwd'
+                            sh 'ls -al'
 
-                        // 테스트 실행
-                        sh 'go test ./...'
+                            // 테스트 실행
+                            sh 'go test ./...'
                         }
                     }
             }
