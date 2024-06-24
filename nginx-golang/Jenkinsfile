@@ -87,8 +87,9 @@ stage('build and test') {
     steps {
         container('golang') {
             dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') {
-                script {
-                    
+                // Ensure gcc is available in the PATH
+                sh 'export PATH=$PATH:/usr/bin'
+                script {    
                     sh 'pwd'
                     sh 'ls -al'
                     sh 'go get -v ./...'
