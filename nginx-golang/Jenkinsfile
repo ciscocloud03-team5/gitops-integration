@@ -18,6 +18,7 @@ pipeline {
                 volumeMounts:
                 - name: workspace-volume
                   mountPath: /home/jenkins/agent
+                  
               - name: docker
                 image: docker
                 command:
@@ -25,18 +26,21 @@ pipeline {
                 args:
                 - 99d
                 tty: true
+
                 volumeMounts:
                 - name: workspace-volume
                   mountPath: /home/jenkins/agent
                 - name: docker-socket
                   mountPath: /var/run
+
               - name: docker-daemon
                 image: docker:dind
                 securityContext:
-                  privileged: true
+                  privileged: true                 
                 volumeMounts:
                 - name: docker-socket
                   mountPath: /var/run
+
               volumes:
               - name: workspace-volume
                 emptyDir: {}
@@ -58,9 +62,7 @@ pipeline {
 
     stages {
         stage("Checkout from SCM") { // 소스 코드 관리(SCM)에서 체크아웃 단계
-            steps {
-                script {
-                 
+            steps {                
                     sh 'pwd'
                     sh 'ls -al'
                     sh 'ls -al nginx-golang'
