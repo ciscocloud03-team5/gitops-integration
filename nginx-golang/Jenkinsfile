@@ -88,6 +88,10 @@ stage('build and test') {
         container('golang') {
             dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {
                 script {
+                    
+                    pwd
+                    ls -al
+
                     sh 'ls -al'
                     sh 'cat go.mod'
                     sh 'go get -v ./...'
