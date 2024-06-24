@@ -17,7 +17,9 @@ pipeline {
     stages {
         stage("Checkout from SCM") {
                steps {
-                   git branch: 'pjt', credentialsId: 'pjt-githubtoken', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+                    sh 'pwd'
+                    sh 'ls -al'
+                    git branch: 'pjt', credentialsId: 'pjt-githubtoken', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
                }
         }
 
@@ -26,6 +28,8 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/test-python/test-python') {
                         sh """
+                        pwd
+                        ls -al
                         cat deployment.yaml
                         sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
                         cat deployment.yaml
