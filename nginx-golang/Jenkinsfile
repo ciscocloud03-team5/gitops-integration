@@ -73,12 +73,12 @@ pipeline {
                     
                 }
             }
-        }
+        
 
 
         stage('Run Tests') { // 테스트 실행 단계
             steps {
-                container('python') {
+                container('golang') {
                     script {
                         dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') { // 작업 디렉토리 설정
                             sh 'pwd'
@@ -115,6 +115,7 @@ pipeline {
                 }
             }
        }
+}
 }
 
 
