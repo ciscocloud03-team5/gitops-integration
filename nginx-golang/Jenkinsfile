@@ -86,9 +86,6 @@ pipeline {
         stage('build and test') { // 테스트 실행 단계
             steps {
                 container('golang') {
-                    script {
-                        sh 'git checkout refs/heads/cjh'
-                    }
                     dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
                         script {
                            sh 'cat go.mod'
