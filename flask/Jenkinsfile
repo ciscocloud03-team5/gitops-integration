@@ -17,14 +17,25 @@ pipeline {
     stages {
         stage("Checkout from SCM") {
                steps {
-                   git branch: 'yjk', credentialsId: 'yunjin6121', url: 'https://github.com/ciscocloud03-team5/gitops-integration' // github credential
-               }
+                  container('python') {
+                    script {
+                        sh 'pwd'
+                        sh 'ls -al'
+                        sh 'ls -al flask'
+                        git credentialsId: 'yunjin6121', // GitHub 자격증명 사용
+                          url: 'https://github.com/ciscocloud03-team5/gitops-integration.git', // GitHub 리포지토리 URL
+                          branch: 'yjk' // 브랜치 이름
+                        sh 'ls -al'
+                        sh 'ls -al flask'
+                    }
+                  }
+        }
         }
 
         stage("Update the Deployment Tags") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/yjk-pipeline/flask') { // 경로지정
+                    dir('/home/jenkins/agent/workspace/yjk-pipeline/flask') { // 작업 디렉토리 설정
                         sh """
                         cat deployment.yaml
                         sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
