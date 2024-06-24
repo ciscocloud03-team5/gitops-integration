@@ -86,7 +86,7 @@ pipeline {
 stage('build and test') {
     steps {
         container('golang') {
-            dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {
+            dir('/home/jenkins/agent/workspace/gitops-integration/nginx-golang') {
                 script {
                     
                     pwd
