@@ -26,7 +26,7 @@ pipeline {
         stage("Update the Deployment Tags") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/test-python/test-python') {
+                    dir('/home/jenkins/agent/workspace/gitops-test-python/test-python') {
                         sh """
                         pwd
                         ls -al
@@ -42,7 +42,7 @@ pipeline {
         stage("Push the changed deployment file to Git") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/test-python/test-python') {
+                    dir('/home/jenkins/agent/workspace/gitops-test-python/test-python') {
                         sh """
                         git add deployment.yaml
                         git commit -m "Updated Deployment Manifest"
