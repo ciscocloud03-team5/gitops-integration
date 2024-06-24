@@ -18,7 +18,7 @@ pipeline {
                 volumeMounts:
                 - name: workspace-volume
                   mountPath: /home/jenkins/agent
-                  
+
               - name: docker
                 image: docker
                 command:
@@ -115,7 +115,6 @@ pipeline {
                 }
             }
        }
-    }
 }
 
 
