@@ -1,4 +1,10 @@
 pipeline {
+    
+    tools {
+        // Install Git tool on the agent if not already installed
+        git 'Default' // Assuming 'Default' is the name of the Git tool installation in Jenkins
+    }    
+    
     agent {
         kubernetes {
             cloud 'team5-eks'
