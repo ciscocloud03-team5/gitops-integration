@@ -81,7 +81,7 @@ pipeline {
             steps {
                 container('golang') {
                     script {
-                        sh 'git checkout cjh'
+                        sh 'git checkout refs/heads/cjh'
                     }
                     dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
                         script {
