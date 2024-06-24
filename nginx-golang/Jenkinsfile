@@ -92,7 +92,7 @@ pipeline {
                             sh 'pwd'
                             sh 'ls -al'
 
-                            
+                            sh 'go get ./...'
                             sh 'go list ./...' // 패키지 목록 출력
                             sh 'go test ./...'  // 테스트 실행
                         }
