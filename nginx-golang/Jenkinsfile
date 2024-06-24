@@ -83,7 +83,7 @@ pipeline {
                     dir('/home/jenkins/agent/workspace/nginx-golang/nginx-golang') {            
                         script {
                             // Go 모듈 초기화
-                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration'
+                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration@cjh'
 
                             // Go 모듈 의존성 설치
                             sh 'go get ./...'
@@ -92,7 +92,7 @@ pipeline {
                             sh 'pwd'
                             sh 'ls -al'
 
-                            sh 'go get ./...'
+                            
                             sh 'go list ./...' // 패키지 목록 출력
                             sh 'go test ./...'  // 테스트 실행
                         }
