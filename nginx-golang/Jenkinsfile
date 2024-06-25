@@ -6,7 +6,54 @@ pipeline {
     }    
     
     agent {
-        any
+        kubernetes {
+            cloud 'team5-eks'
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              serviceAccountName: jenkins-admin
+              containers:
+              - name: golang
+                image: golang:1.18-alpine
+                command:
+                - sleep
+                args:
+                - 99d
+                tty: true
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /home/jenkins/agent
+
+              - name: docker
+                image: docker
+                command:
+                - sleep
+                args:
+                - 99d
+                tty: true
+
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /home/jenkins/agent
+                - name: docker-socket
+                  mountPath: /var/run
+
+              - name: docker-daemon
+                image: docker:dind
+                securityContext:
+                  privileged: true                 
+                volumeMounts:
+                - name: docker-socket
+                  mountPath: /var/run
+
+              volumes:
+              - name: workspace-volume
+                emptyDir: {}
+              - name: docker-socket
+                emptyDir: {}
+            """
+        }
     }
 
 
@@ -25,44 +72,43 @@ pipeline {
                     sh 'pwd'
                     sh 'ls -al'
                     sh 'ls -al nginx-golang'
-                dir('home/jenkins/agent/workspace/test_pipe/nginx-golang'){
+
                     git credentialsId: 'CJH_Github_Credential',     // GitHub 자격증명 사용
                         url: 'https://github.com/ciscocloud03-team5/gitops-integration', // GitHub 리포지토리 URL
                         branch: 'cjh'
-                    sh 'git checkout refs/heads/cjh' 
                     sh 'ls -al'
                 }
             }
+        
+
+
+        stage('Build and Test') {
+            steps {
+                container('golang') {
+                        script {
+                             dir('home/jenkins/agent/workspace/test_pipe/nginx-golang'){
+                            sh 'go version'  // Go 버전 확인
+                            sh 'go env'      // Go 환경 변수 확인
+                            sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
+                            sh 'ls -al'
+                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
+                            sh 'go mod tidy' // Go 모듈 정리
+
+                            
+                            // 패키지가 없는 경우 예외 처리
+                            if (packages.empty) {
+                                error "No packages found"
+                            }
+                            
+                            // 패키지가 있다면 빌드 및 테스트 실행
+                            sh "go build -v ${packages}"
+                            sh "go test -v ${packages}"
+
+                        }
+                }
+            }
         }
-
-
-        // stage('Build and Test') {
-        //     steps {
-        //         container('golang') {
-        //             dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') {
-        //                 script {
-        //                     sh 'go version'  // Go 버전 확인
-        //                     sh 'go env'      // Go 환경 변수 확인
-        //                     sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
-        //                     sh 'ls -al'
-        //                     sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
-        //                     sh 'go mod tidy' // Go 모듈 정리
-
-                            
-        //                     // 패키지가 없는 경우 예외 처리
-        //                     if (packages.empty) {
-        //                         error "No packages found"
-        //                     }
-                            
-        //                     // 패키지가 있다면 빌드 및 테스트 실행
-        //                     sh "go build -v ${packages}"
-        //                     sh "go test -v ${packages}"
-
-        //                 }
-        //         }
-        //     }
-        // }
-        // }
+        }
 
 
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
