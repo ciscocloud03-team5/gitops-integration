@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: pokerogue-ingress
-  namespace: stage
+  namespace: dev
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -14,13 +14,13 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: pokerogue.nuschool.store
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: pokerogue-service
+                name: pokerogue
                 port:
-                  number: 8080
+                  number: 5000
+      host: pokerogue.nuschool.store
