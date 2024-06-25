@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pokerogue-deployment
+  namespace: stage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pokerogue
+  template:
+    metadata:
+      labels:
+        app: pokerogue
+    spec:
+      containers:
+        - name: pokerogue
+          image: ceramicwhite/pokerogue:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_HOST
+              value: "rogueserver-service"
+            - name: SERVER_PORT
+              value: "3000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pokerogue-service
+  namespace: stage
+  labels:
+    app: pokerogue 
+spec:
+  selector:
+    app: pokerogue
+  type: ClusterIP
+  ports:
+    - name: pokerogue-port
+      port: 8080
+      targetPort: 8080
