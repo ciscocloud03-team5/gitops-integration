@@ -117,6 +117,7 @@ pipeline {
                 container('docker') {
                     dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') { // 작업 디렉토리 설정
                         script {
+                            sh 'ls -l'
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:latest .' // Docker 이미지 빌드(latest 태그)
                             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // Docker 로그인
