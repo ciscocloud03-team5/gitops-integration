@@ -115,7 +115,7 @@ pipeline {
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
             steps {
                 container('docker') {
-                    dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') { // 작업 디렉토리 설정
+                    dir('home/jenkins/agent/workspace/test_pipe') { // 작업 디렉토리 설정
                         script {
                             sh 'ls -l'
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
