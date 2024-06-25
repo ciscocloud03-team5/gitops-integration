@@ -25,7 +25,7 @@ pipeline {
                }
         }
 
-        stage("Update the Deployment Tags") {
+        stage("Update the Deployment Tags") {    // Deployment 버전 관리
             steps {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-yjk/flask') { // 작업 디렉토리 설정
