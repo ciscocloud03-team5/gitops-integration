@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask:1.4-28
+  name: flask:1.4-29
   namespace: dev
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask:1.4-28
+      app: flask:1.4-29
   template:
     metadata:
       labels:
-        app: flask:1.4-28
+        app: flask:1.4-29
     spec:
       containers:
-        - name: flask:1.4-28
-          image: yunjin6121/flask:1.4-28
+        - name: flask:1.4-29
+          image: yunjin6121/flask:1.4-29
           resources:
             limits:
               memory: "256Mi"
