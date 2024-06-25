@@ -87,13 +87,14 @@ pipeline {
             steps {
                 container('golang') {
                     script {
-                        sh 'go version'  // Go 버전 확인
-                        sh 'go env'      // Go 환경 변수 확인
-                        sh 'pwd'
-                        sh 'go mod tidy' // Go 모듈 정리
-                        sh 'go build -v ./...' // Go 빌드
-                        sh 'go test -v ./...'  // Go 테스트
-                    }
+                        dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') {
+                            sh 'go version'  // Go 버전 확인
+                            sh 'go env'      // Go 환경 변수 확인
+                            sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
+                            sh 'go mod tidy' // Go 모듈 정리
+                            sh 'go build -v ./...' // Go 빌드
+                            sh 'go test -v ./...'  // Go 테스트
+                        }
                 }
             }
         }
@@ -104,7 +105,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') { // 작업 디렉토리 설정
+                        dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') { // 작업 디렉토리 설정
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:latest .' // Docker 이미지 빌드(latest 태그)
                             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // Docker 로그인
