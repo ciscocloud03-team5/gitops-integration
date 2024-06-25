@@ -6,54 +6,7 @@ pipeline {
     }    
     
     agent {
-        kubernetes {
-            cloud 'team5-eks'
-            yaml """
-            apiVersion: v1
-            kind: Pod
-            spec:
-              serviceAccountName: jenkins-admin
-              containers:
-              - name: golang
-                image: golang:1.18-alpine
-                command:
-                - sleep
-                args:
-                - 99d
-                tty: true
-                volumeMounts:
-                - name: workspace-volume
-                  mountPath: /home/jenkins/agent
-
-              - name: docker
-                image: docker
-                command:
-                - sleep
-                args:
-                - 99d
-                tty: true
-
-                volumeMounts:
-                - name: workspace-volume
-                  mountPath: /home/jenkins/agent
-                - name: docker-socket
-                  mountPath: /var/run
-
-              - name: docker-daemon
-                image: docker:dind
-                securityContext:
-                  privileged: true                 
-                volumeMounts:
-                - name: docker-socket
-                  mountPath: /var/run
-
-              volumes:
-              - name: workspace-volume
-                emptyDir: {}
-              - name: docker-socket
-                emptyDir: {}
-            """
-        }
+        any
     }
 
 
@@ -72,7 +25,7 @@ pipeline {
                     sh 'pwd'
                     sh 'ls -al'
                     sh 'ls -al nginx-golang'
-
+                dir('home/jenkins/agent/workspace/test_pipe/nginx-golang'){
                     git credentialsId: 'CJH_Github_Credential',     // GitHub 자격증명 사용
                         url: 'https://github.com/ciscocloud03-team5/gitops-integration', // GitHub 리포지토리 URL
                         branch: 'cjh'
@@ -80,7 +33,7 @@ pipeline {
                     sh 'ls -al'
                 }
             }
-        
+        }
 
 
         // stage('Build and Test') {
@@ -115,7 +68,7 @@ pipeline {
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
             steps {
                 container('docker') {
-                    dir('home/jenkins/agent/workspace/test_pipe') { // 작업 디렉토리 설정
+                    dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') { // 작업 디렉토리 설정
                         script {
                             sh 'ls -l'
                             sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
