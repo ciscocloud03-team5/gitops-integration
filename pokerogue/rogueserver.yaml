@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rogueserver-deployment
+  namespace: stage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rogueserver
+  template:
+    metadata:
+      labels:
+        app: rogueserver
+    spec:
+      containers:
+        - name: rogueserver
+          image: ceramicwhite/pokerogue:rogueserver
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rogueserver-service
+  namespace: stage
+  labels:
+    app: rogueserver
+spec:
+  selector:
+    app: rogueserver
+  type: ClusterIP
+  ports:
+    - name: rogueserver-port
+      port: 3000
+      targetPort: 3000
