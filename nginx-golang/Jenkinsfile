@@ -85,7 +85,7 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                container('golang') {
+                    {
                     dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') {
                         script {
                             sh 'go version'  // Go 버전 확인
@@ -95,9 +95,6 @@ pipeline {
                             sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
                             sh 'go mod tidy' // Go 모듈 정리
 
-                            // 명시적으로 패키지 리스트 확인
-                            def packages = sh(script: 'go list ./...', returnStdout: true).trim()
-                            echo "Packages found: ${packages}"
                             
                             // 패키지가 없는 경우 예외 처리
                             if (packages.empty) {
