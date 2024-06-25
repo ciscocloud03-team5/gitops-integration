@@ -92,7 +92,7 @@ pipeline {
                             sh 'go env'      // Go 환경 변수 확인
                             sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
                             sh 'ls -al'
-                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang'
+                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
                             sh 'go mod tidy' // Go 모듈 정리
 
                             // 명시적으로 패키지 리스트 확인
