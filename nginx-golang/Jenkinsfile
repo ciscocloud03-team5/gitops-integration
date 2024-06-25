@@ -1,11 +1,9 @@
 pipeline {
-    
-    tools {
-        // Install Git tool on the agent if not already installed
-        git 'Default' // Assuming 'Default' is the name of the Git tool installation in Jenkins
-    }    
-    
     agent {
+        // 이 섹션은 Kubernetes 환경과 Jenkins 에이전트용 Pod 템플릿을 정의
+        // python, docker, dind 컨테이너 존재
+        // 'docker-daemon' 컨테이너는 Docker in Docker(DIND) 모드를 사용하여 도커 데몬을 실행
+        // 'workspace-volume'와 'docker-socket' 볼륨은 컨테이너 간에 데이터를 공유하는 데 사용
         kubernetes {
             cloud 'team5-eks'
             yaml """
@@ -85,8 +83,8 @@ pipeline {
         stage('Build and Test') {
             steps {
                 container('golang') {
-                        script {
-                             dir('home/jenkins/agent/workspace/test_pipe/nginx-golang'){
+                    script {
+                        dir('home/jenkins/agent/workspace/test_pipe/nginx-golang'){
                             sh 'go version'  // Go 버전 확인
                             sh 'go env'      // Go 환경 변수 확인
                             sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
