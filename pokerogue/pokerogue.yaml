@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pokerogue-deployment
-  namespace: stage
+  name: pokerogue
+  namespace: dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pokerogue
@@ -14,28 +14,28 @@ spec:
         app: pokerogue
     spec:
       containers:
-        - name: pokerogue
-          image: ceramicwhite/pokerogue:latest
-          ports:
-            - containerPort: 8080
-          env:
-            - name: SERVER_HOST
-              value: "rogueserver-service"
-            - name: SERVER_PORT
-              value: "3000"
+      - name: pokerogue
+        image: ceramicwhite/pokerogue
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_USER
+          value: pokeuser
+        - name: DB_PASS
+          value: pokeuser
+        - name: DB_NAME
+          value: pokemondb
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: pokerogue-service
-  namespace: stage
-  labels:
-    app: pokerogue 
+  name: pokerogue
+  namespace: dev
 spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
   selector:
     app: pokerogue
-  type: ClusterIP
-  ports:
-    - name: pokerogue-port
-      port: 8080
-      targetPort: 8080
