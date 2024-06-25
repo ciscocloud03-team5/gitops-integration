@@ -83,33 +83,33 @@ pipeline {
         
 
 
-        stage('Build and Test') {
-            steps {
-                    {
-                    dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') {
-                        script {
-                            sh 'go version'  // Go 버전 확인
-                            sh 'go env'      // Go 환경 변수 확인
-                            sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
-                            sh 'ls -al'
-                            sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
-                            sh 'go mod tidy' // Go 모듈 정리
+        // stage('Build and Test') {
+        //     steps {
+        //         container('golang') {
+        //             dir('home/jenkins/agent/workspace/test_pipe/nginx-golang') {
+        //                 script {
+        //                     sh 'go version'  // Go 버전 확인
+        //                     sh 'go env'      // Go 환경 변수 확인
+        //                     sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
+        //                     sh 'ls -al'
+        //                     sh 'go mod init github.com/ciscocloud03-team5/gitops-integration/nginx-golang/go.mod'
+        //                     sh 'go mod tidy' // Go 모듈 정리
 
                             
-                            // 패키지가 없는 경우 예외 처리
-                            if (packages.empty) {
-                                error "No packages found"
-                            }
+        //                     // 패키지가 없는 경우 예외 처리
+        //                     if (packages.empty) {
+        //                         error "No packages found"
+        //                     }
                             
-                            // 패키지가 있다면 빌드 및 테스트 실행
-                            sh "go build -v ${packages}"
-                            sh "go test -v ${packages}"
+        //                     // 패키지가 있다면 빌드 및 테스트 실행
+        //                     sh "go build -v ${packages}"
+        //                     sh "go test -v ${packages}"
 
-                        }
-                }
-            }
-        }
-        }
+        //                 }
+        //         }
+        //     }
+        // }
+        // }
 
 
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
