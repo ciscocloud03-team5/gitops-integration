@@ -89,6 +89,8 @@ pipeline {
                     script {
                         sh 'go version'  // Go 버전 확인
                         sh 'go env'      // Go 환경 변수 확인
+                        sh 'ls -al /home/jenkins/agent/workspace/CI_code_cjh/nginx-golang'
+                         sh 'cat /home/jenkins/agent/workspace/CI_code_cjh/nginx-golang/go.mod'
                         sh 'go mod tidy' // Go 모듈 정리
                         sh 'go build -v ./...' // Go 빌드
                         sh 'go test -v ./...'  // Go 테스트
