@@ -91,6 +91,8 @@ pipeline {
                             sh 'go version'  // Go 버전 확인
                             sh 'go env'      // Go 환경 변수 확인
                             sh 'pwd'         // home/jenkins/agent/workspace/test_pipe
+                            sh 'ls -al'
+                            sh 'go mod init github.com/ciscocloud03-team5/nginx-golang'
                             sh 'go mod tidy' // Go 모듈 정리
                             sh 'go build -v ./...' // Go 빌드
                             sh 'go test -v ./...'  // Go 테스트
