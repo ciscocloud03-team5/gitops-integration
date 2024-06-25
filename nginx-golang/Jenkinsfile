@@ -1,4 +1,4 @@
-pipeline {
+/* pipeline {
     
     tools {
         // Install Git tool on the agent if not already installed
@@ -129,8 +129,134 @@ pipeline {
     }
 }
 
-}
+} */
 
+pipeline {
+    tools {
+        // Install Git tool on the agent if not already installed
+        git 'Default' // Assuming 'Default' is the name of the Git tool installation in Jenkins
+    }
+
+    agent {
+        kubernetes {
+            cloud 'team5-eks'
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              serviceAccountName: jenkins-admin
+              containers:
+              - name: golang
+                image: golang:1.18-alpine
+                command:
+                - sleep
+                args:
+                - 99d
+                tty: true
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /home/jenkins/agent
+
+              - name: docker
+                image: docker
+                command:
+                - sleep
+                args:
+                - 99d
+                tty: true
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /home/jenkins/agent
+                - name: docker-socket
+                  mountPath: /var/run/docker.sock
+
+              - name: docker-daemon
+                image: docker:dind
+                securityContext:
+                  privileged: true
+                volumeMounts:
+                - name: docker-socket
+                  mountPath: /var/run/docker.sock
+
+              volumes:
+              - name: workspace-volume
+                emptyDir: {}
+              - name: docker-socket
+                emptyDir: {}
+            """
+        }
+    }
+
+    environment {
+        APP_NAME = "nginx-golang" // 애플리케이션 이름
+        RELEASE = "1.18" // 릴리즈 버전
+        DOCKER_USER = "spear77" // Docker Hub 사용자 이름
+        DOCKERHUB_CREDENTIALS = credentials('CJH_Docker_credential') // Jenkins Credentials에 저장된 Docker Hub 자격증명 ID
+        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}" // 이미지 이름
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}" // 이미지 태그
+    }
+
+    stages {
+        stage("Checkout from SCM") { // 소스 코드 관리(SCM)에서 체크아웃 단계
+            steps {
+                script {
+                    sh 'pwd'
+                    sh 'ls -al'
+                    sh 'ls -al nginx-golang'
+
+                    git credentialsId: 'CJH_Github_Credential', // GitHub 자격증명 사용
+                        url: 'https://github.com/ciscocloud03-team5/gitops-integration', // GitHub 리포지토리 URL
+                        branch: 'cjh'
+                    sh 'git checkout refs/heads/cjh'
+                    sh 'ls -al'
+                }
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                container('golang') {
+                    dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') {
+                        script {
+                            sh 'go version'  // Go 버전 확인
+                            sh 'go env'      // Go 환경 변수 확인
+                            sh 'pwd'         // 현재 디렉토리 확인
+                            sh 'go mod tidy' // Go 모듈 정리
+                            sh 'go build -v ./...' // Go 빌드
+                            sh 'go test -v ./...'  // Go 테스트
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
+            steps {
+                container('docker') {
+                    dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') { // 작업 디렉토리 설정
+                        script {
+                            sh 'docker build --no-cache -t ${IMAGE_NAME}:${IMAGE_TAG} .' // Docker 이미지 빌드
+                            sh 'docker build --no-cache -t ${IMAGE_NAME}:latest .' // Docker 이미지 빌드(latest 태그)
+                            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // Docker 로그인
+                            sh 'docker push ${IMAGE_NAME}:${IMAGE_TAG}' // Docker 이미지 푸시
+                            sh 'docker push ${IMAGE_NAME}:latest' // Docker 이미지 푸시(latest 태그)
+                        }
+                    }
+                }
+            }
+        }
+
+        stage("Trigger CD Pipeline") {
+            steps {
+                script {
+                    build job: 'gitops-test-golang', parameters: [
+                        string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}")
+                    ]
+                }
+            }
+        }
+    }
+}
 
 
 
