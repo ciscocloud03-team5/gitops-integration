@@ -83,23 +83,20 @@ pipeline {
         
 
 
-stage('build and test') {
-    steps {
-        container('golang') {
-            dir('/home/jenkins/agent/workspace/CI_code_cjh/nginx-golang') {
-                script {    
-                    sh 'pwd'
-                    sh 'ls -al'
-                    sh 'go get -v ./...'
-                    sh 'pwd'
-                    sh 'ls -al'
-                    sh 'go list ./...'
-                    sh 'go test ./...'
+        stage('Build and Test') {
+            steps {
+                container('golang') {
+                    script {
+                        sh 'go version'  // Go 버전 확인
+                        sh 'go env'      // Go 환경 변수 확인
+                        sh 'go mod tidy' // Go 모듈 정리
+                        sh 'go build -v ./...' // Go 빌드
+                        sh 'go test -v ./...'  // Go 테스트
+                    }
                 }
             }
         }
-    }
-}
+    
 
 
         stage('Build and Push Docker Image') { // Docker 이미지 빌드 및 푸시 단계
@@ -127,8 +124,8 @@ stage('build and test') {
                 }
             }
        }
-}
-}
+    }
+
 
 
 
