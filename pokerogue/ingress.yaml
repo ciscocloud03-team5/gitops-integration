@@ -1,26 +1,20 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: pokerogue-ingress
+  name: pokerogue-deployment
   namespace: dev
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/group.name: "shared-alb-group"
-    alb.ingress.kubernetes.io/subnets: subnet-06363e28795aaad69, subnet-0f76cf4c2c286f902
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:767397906204:certificate/c4db475c-a084-4e83-8b25-740af4e91841"
-  labels:
-    app: pokerogue
 spec:
-  ingressClassName: alb
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: pokerogue
-                port:
-                  number: 5000
-      host: pokerogue.nuschool.store
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pokerogue
+  template:
+    metadata:
+      labels:
+        app: pokerogue
+    spec:
+      containers:
+      - name: pokerogue
+        image: ksi05298/pokerogue-local:latest
+        ports:
+        - containerPort: 8001
