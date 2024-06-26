@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sparkjava-dev-ingress
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: "sparkjava_dev-alb-group"
+    alb.ingress.kubernetes.io/subnets: subnet-06363e28795aaad69, subnet-0f76cf4c2c286f902
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:767397906204:certificate/c4db475c-a084-4e83-8b25-740af4e91841"
+  labels:
+    app: sparkjava-dev
+spec:
+  ingressClassName: alb
+  rules:
+    - host: sparkjava-dev.nuschool.store    # sub domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sparkjava-service
+                port:
+                  number: 8080
+
+# 이 Ingress 리소스는 pokerogue.nuschool.store 도메인에 대한 HTTP 트래픽을 sparkjava_service 서비스의 80번 포트로 라우팅

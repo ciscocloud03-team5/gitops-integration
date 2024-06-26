@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sparkjava-service
+  namespace: dev
+spec:
+  selector:
+    app: sparkjava-dev
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  # following deployment container port 
+  # type: ClusterIP
