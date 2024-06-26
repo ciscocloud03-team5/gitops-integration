@@ -31,10 +31,11 @@ pipeline {
                         sh """
                         pwd
                         ls -al
-                        cat deployment.yaml
+                        cat sparkjava_deployment.yaml 
                         sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-                        cat deployment.yaml
+                        cat sparkjava_deployment.yaml
                         """
+                    // 배포 yaml 파일명 정확히 작성할 것.
                     }
                 }
             }
