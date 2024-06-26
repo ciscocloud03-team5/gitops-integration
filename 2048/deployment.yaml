@@ -17,5 +17,5 @@ spec:
       - name: app2048
         image: yunjin6121/2048:1.0.0-1
         ports:
-        - containerPort: 8000
+        - containerPort: 80
 
