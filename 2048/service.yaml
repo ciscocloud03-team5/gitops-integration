@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   selector:
-    app: 2048
+    app: app2048
   ports:
     - protocol: TCP
       port: 80
