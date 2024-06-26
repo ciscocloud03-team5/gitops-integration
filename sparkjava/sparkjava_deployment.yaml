@@ -4,7 +4,7 @@ metadata:
   name: sparkjava-deploy
   namespace: dev
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: sparkjava-dev
@@ -17,4 +17,8 @@ spec:
         - name: sparkjava-dev-image
           image: maven:3.8.5-eclipse-temurin-17
           ports:
-            - containerPort: 8080
+            - containerPort: 8080 
+
+
+
+
