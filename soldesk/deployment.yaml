@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flaskapp-deploy
+  name: ocr-deployment
   namespace: dev
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flaskapp
+      app: ocr
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: ocr
     spec:
       containers:
-        - name: flaskapp
-          image: ksi05298/flask-app:1.0.0-69
+        - name: ocr
+          image: eleys7485/ocr:1.0.0-27
           resources:
             limits:
               memory: "256Mi"
