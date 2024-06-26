@@ -48,9 +48,10 @@ pipeline {
                         sh """
                         git config --global user.email "cjhcjh0429@gmail.com"
                         git config --global user.name "icebreakerrr"
-                        git add sparkjava_deployment.yaml
+                        git add ../sparkjava@tmp/
                         git commit -m "New Update Of Deployment"
                         """
+                        // git add sparkjava_deployment.yaml                        
                         withCredentials([gitUsernamePassword(credentialsId: 'CJH_Github_Credential', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration cjh"
                         }
