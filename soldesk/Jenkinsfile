@@ -40,14 +40,28 @@ pipeline {
             }
         }
 
+        stage("Check Git Status") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
+                        sh """
+                        git status
+                        """
+                    }
+                }
+            }
+        }
+
         stage("Push the changed deployment file to Git") {
             steps {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
+                        ls -al
                         git config --global user.email "eleys8596@naver.com"
                         git config --global user.name "rootssv"
                         git add deployment.yaml
+                        git status
                         git commit -m "Updated Deployment Manifest"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
