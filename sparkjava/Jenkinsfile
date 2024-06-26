@@ -52,7 +52,6 @@ pipeline {
                         pwd
                         ls -al
                         git add sparkjava_deployment.yaml
-                        git add ../sparkjava@tmp/
                         git commit -m "New Update Of Deployment"
                         git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                         """
