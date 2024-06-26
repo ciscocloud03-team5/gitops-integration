@@ -49,8 +49,8 @@ pipeline {
                         sh """
                         git config --global user.email "cjhcjh0429@gmail.com"
                         git config --global user.name "icebreakerrr"
+                        ls -al
                         git add sparkjava_deployment.yaml
-                        git add .gitignore
                         git commit -m "New Update Of Deployment"
                         git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                         """
