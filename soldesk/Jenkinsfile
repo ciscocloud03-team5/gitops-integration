@@ -1,3 +1,7 @@
+ git clone --single-branch --branch ocr https://github.com/ciscocloud03-team5/gitops-integration.git
+
+
+
 pipeline {
     agent {
         kubernetes {
@@ -12,17 +16,16 @@ pipeline {
     }
     environment {
         APP_NAME = "ocr-local"
-        IMAGE_TAG = "latest" // 실제 이미지 태그로 변경하세요
     }
 
     stages {
         stage("Checkout from SCM") {
-            steps {
-                sh 'pwd'
-                sh 'ls -al'
-                sh 'ls -al soldesk'
-                git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
-            }
+               steps {
+                    sh 'pwd'
+                    sh 'ls -al'
+                    sh 'ls -al soldesk'
+                    git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+               }
         }
 
         stage("Update the Deployment Tags") {
@@ -30,13 +33,10 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
-                        echo "Current directory: $(pwd)"
-                        echo "Listing contents:"
+                        pwd
                         ls -al
-                        echo "Displaying deployment.yaml:"
                         cat deployment.yaml
-                        sed -i 's#image:.*#image: eleys7485/ocr:${IMAGE_TAG}#' deployment.yaml
-                        echo "Updated deployment.yaml:"
+                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
                         cat deployment.yaml
                         """
                     }
@@ -49,14 +49,10 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
-                        echo "Listing contents before git add:"
-                        ls -al
                         git config --global user.email "eleys8596@naver.com"
                         git config --global user.name "rootssv"
                         git add deployment.yaml
-                        echo "Git status after git add:"
-                        git status
-                        git commit -m "Updated Deployment Manifest" || echo "No changes to commit"
+                        git commit -m "Updated Deployment Manifest"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
