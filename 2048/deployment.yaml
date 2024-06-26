@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2048:1.0.0-4
+  name: app2048
   namespace: app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: app2048:1.0.0-4
+      app: app2048
   template:
     metadata:
       labels:
-        app: app2048:1.0.0-4
+        app: app2048
     spec:
       containers:
-      - name: app2048:1.0.0-4
-        image: yunjin6121/2048:1.0.0-1
+      - name: app2048
+        image: yunjin6121/app2048:1.0.0-4
         ports:
         - containerPort: 80
 
