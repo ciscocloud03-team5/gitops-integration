@@ -45,6 +45,7 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
+                        ls -al
                         git config --global user.email "eleys8596@naver.com"
                         git config --global user.name "rootssv"
                         git add deployment.yaml
