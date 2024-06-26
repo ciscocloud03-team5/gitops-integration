@@ -15,22 +15,6 @@ pipeline {
     }
 
     stages {
-    
-        stage("Delete Untracked Files") {
-            steps {
-                script {
-                    // Change to the workspace directory
-                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava') {
-                        // Remove untracked files and directories
-                        sh 'rm -rf .gitignore ../sparkjava@tmp/'
-                    }
-                }
-            }
-        }
-
-
-
-
         stage("Checkout from SCM") {
                steps {
                     sh 'pwd'
