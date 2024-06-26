@@ -41,6 +41,20 @@ pipeline {
             }
         }
 
+        stage("Prepare Environment") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava') {
+                        // Create or update .gitignore to exclude specific directory
+                        sh 'echo "sparkjava@tmp/" >> .gitignore'
+                    }
+                }
+            }
+        }
+
+
+
+
         stage("Push the changed deployment file to Git") {
             steps {
                 script {
