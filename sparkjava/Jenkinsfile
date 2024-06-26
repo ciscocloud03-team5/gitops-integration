@@ -48,7 +48,7 @@ pipeline {
                         sh """
                         git config --global user.email "cjhcjh0429@gmail.com"
                         git config --global user.name "icebreakerrr"
-                        git add deployment.yaml
+                        git add sparkjava_deployment.yaml
                         git commit -m "New Update Of Deployment"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'CJH_Github_Credential', gitToolName: 'Default')]) {
