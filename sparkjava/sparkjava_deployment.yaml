@@ -17,4 +17,4 @@ spec:
         - name: sparkjava-dev-image
           image: maven:3.8.5-eclipse-temurin-17
           ports:
-            - containerPort: 8080
+            - containerPort: 6026

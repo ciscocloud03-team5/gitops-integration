@@ -23,6 +23,6 @@ spec:
               service:
                 name: sparkjava_service
                 port:
-                  number: 8080
+                  number: 6026
 
 # 이 Ingress 리소스는 pokerogue.nuschool.store 도메인에 대한 HTTP 트래픽을 sparkjava_service 서비스의 80번 포트로 라우팅
