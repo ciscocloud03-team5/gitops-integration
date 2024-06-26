@@ -15,14 +15,6 @@ pipeline {
     }
 
     stages {
-        stage("Checkout from SCM") {
-               steps {
-                    sh 'pwd'
-                    sh 'ls -al'
-                    git branch: 'cjh', credentialsId: 'CJH_Github_Credential', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
-               }
-        }
-
         stage("Delete Untracked Files") {
             steps {
                 script {
@@ -36,6 +28,15 @@ pipeline {
         }
 
 
+
+
+        stage("Checkout from SCM") {
+               steps {
+                    sh 'pwd'
+                    sh 'ls -al'
+                    git branch: 'cjh', credentialsId: 'CJH_Github_Credential', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+               }
+        }
 
         // 버전관리
         stage("Update the Deployment Tags") {
