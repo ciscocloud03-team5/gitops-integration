@@ -15,6 +15,7 @@ pipeline {
     }
 
     stages {
+    
         stage("Delete Untracked Files") {
             steps {
                 script {
