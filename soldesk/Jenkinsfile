@@ -27,7 +27,7 @@ pipeline {
         stage("Update the Deployment Tags") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
+                    dir('/home/jenkins/agent/workspace/gitops-integration/soldesk') {
                         sh """
                         pwd
                         ls -al
