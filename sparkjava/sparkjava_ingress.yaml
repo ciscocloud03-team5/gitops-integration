@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sparkjava_dev_ingress
+  name: sparkjava-dev-ingress
   namespace: dev
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -10,18 +10,18 @@ metadata:
     alb.ingress.kubernetes.io/subnets: subnet-06363e28795aaad69, subnet-0f76cf4c2c286f902
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:767397906204:certificate/c4db475c-a084-4e83-8b25-740af4e91841"
   labels:
-    app: sparkjava_dev
+    app: sparkjava-dev
 spec:
   ingressClassName: alb
   rules:
-    - host: sparkjava_dev.nuschool.store    # sub domain
+    - host: sparkjava-dev.nuschool.store    # sub domain
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: sparkjava_service
+                name: sparkjava-service
                 port:
                   number: 6026
 
