@@ -62,8 +62,7 @@ pipeline {
                         sh """
                         git config --global user.email "cjhcjh0429@gmail.com"
                         git config --global user.name "icebreakerrr"
-                        git add .gitignore
-                        git add ../sparkjava@tmp/
+                        git add sparkjava_deployment.yaml 
                         git commit -m "New Update Of Deployment"
                         git push origin cjh
                         """
