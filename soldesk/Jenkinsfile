@@ -16,12 +16,12 @@ pipeline {
 
     stages {
         stage("Checkout from SCM") {
-               steps {
-                    sh 'pwd'
-                    sh 'ls -al'
-                    sh 'ls -al soldesk'
-                    git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
-               }
+            steps {
+                sh 'pwd'
+                sh 'ls -al'
+                sh 'ls -al soldesk'
+                git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+            }
         }
 
         stage("Update the Deployment Tags") {
@@ -29,23 +29,14 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
-                        pwd
+                        echo "Current directory: $(pwd)"
+                        echo "Listing contents:"
                         ls -al
+                        echo "Displaying deployment.yaml:"
                         cat deployment.yaml
                         sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                        echo "Updated deployment.yaml:"
                         cat deployment.yaml
-                        """
-                    }
-                }
-            }
-        }
-
-        stage("Check Git Status") {
-            steps {
-                script {
-                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
-                        sh """
-                        git status
                         """
                     }
                 }
@@ -57,12 +48,14 @@ pipeline {
                 script {
                     dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
                         sh """
+                        echo "Listing contents before git add:"
                         ls -al
                         git config --global user.email "eleys8596@naver.com"
                         git config --global user.name "rootssv"
                         git add deployment.yaml
+                        echo "Git status after git add:"
                         git status
-                        git commit -m "Updated Deployment Manifest"
+                        git commit -m "Updated Deployment Manifest" || echo "No changes to commit"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
@@ -73,3 +66,4 @@ pipeline {
         }
     }
 }
+
