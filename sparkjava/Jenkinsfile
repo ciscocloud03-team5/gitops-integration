@@ -50,6 +50,7 @@ pipeline {
                         git config --global user.name "icebreakerrr"
                         git add sparkjava_deployment.yaml 
                         git commit -m "New Update Of Deployment"
+                        git clean -fd ../sparkjava@tmp/
                         """
                         // git add sparkjava_deployment.yaml 
                         // git add ../sparkjava@tmp/                       
