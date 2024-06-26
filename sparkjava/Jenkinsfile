@@ -51,6 +51,7 @@ pipeline {
                         git config --global user.name "icebreakerrr"
                         pwd
                         ls -al
+                        git pull origin cjh
                         git add sparkjava_deployment.yaml
                         git add ../sparkjava@tmp/
                         git commit -m 'New Update Of Deployment'
