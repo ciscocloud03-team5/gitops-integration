@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: 2048-ingress
+  name: app2048-ingress
   namespace: dev
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -14,13 +14,13 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: 2048.nuschool.store  
+    - host: app2048.nuschool.store  
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: 2048-service
+                name: app2048-service
                 port:
                   number: 80
