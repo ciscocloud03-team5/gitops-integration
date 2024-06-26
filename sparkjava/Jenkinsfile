@@ -12,6 +12,7 @@ pipeline {
     }
     environment {
         APP_NAME = "sparkjava-app"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
 
     stages {
