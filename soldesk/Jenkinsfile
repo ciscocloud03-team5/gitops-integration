@@ -19,7 +19,8 @@ pipeline {
                steps {
                     sh 'pwd'
                     sh 'ls -al'
-                    git branch: 'pjt', credentialsId: 'pjt-githubtoken', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+                    sh 'ls -al soldesk'
+                    git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
                }
         }
 
