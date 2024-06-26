@@ -21,8 +21,8 @@ pipeline {
                 script {
                     // 기존의 checkout 스텝을 수정하여 새로운 브랜치로 변경합니다
                     checkout([$class: 'GitSCM',
-                              branches: [[name: 'master']], // 여기서 'master'는 새로운 브랜치 이름입니다
-                              userRemoteConfigs: [[url: 'https://github.com/your/repo.git']]])
+                              branches: [[name: 'cjh']], // 여기서 'master'는 새로운 브랜치 이름입니다
+                              userRemoteConfigs: [[url: 'https://github.com/ciscocloud03-team5/gitops-integration']]])
                 }
             }
         }
