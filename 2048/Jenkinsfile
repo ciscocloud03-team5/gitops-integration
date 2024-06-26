@@ -11,7 +11,7 @@ pipeline {
         }
     }
     environment {
-        APP_NAME = "2048"
+        APP_NAME = "app2048"
     }
 
     stages {
