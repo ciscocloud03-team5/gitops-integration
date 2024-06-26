@@ -50,7 +50,7 @@ pipeline {
                         git add deployment.yaml
                         git commit -m "Updated Deployment Manifest"
                         """
-                        withCredentials([gitUsernamePassword(credentialsId: 'pjt-githubtoken', gitToolName: 'Default')]) {
+                        withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
                         }
                     }
