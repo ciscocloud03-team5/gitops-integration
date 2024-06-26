@@ -1,58 +1,26 @@
 pipeline {
-    agent {
-        kubernetes {
-            cloud 'team5-eks'
-            yaml """
-            apiVersion: v1
-            kind: Pod
-            spec:
-              serviceAccountName: jenkins-admin
-            """
-        }
-    }
-    environment {
-        APP_NAME = "ocr-local"
-    }
+    agent any
 
     stages {
-        stage("Checkout from SCM") {
-               steps {
-                    sh 'pwd'
-                    sh 'ls -al'
-                    sh 'ls -al soldesk'
-                    git branch: 'ocr', credentialsId: 'ocr', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
-               }
-        }
-
-        stage("Update the Deployment Tags") {
+        stage('Checkout') {
             steps {
-                script {
-                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
-                        sh """
-                        pwd
-                        ls -al
-                        cat deployment.yaml
-                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-                        cat deployment.yaml
-                        """
-                    }
-                }
+                checkout scm
             }
         }
-
-        stage("Push the changed deployment file to Git") {
+        stage('Git Config and Commit') {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
-                        sh """
-                        git config --global user.email "eleys8596@naver.com"
-                        git config --global user.name "rootssv"
-                        git add deployment.yaml
-                        git commit -m "Updated Deployment Manifest"
-                        """
-                        withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
-                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
-                        }
+                    dir('gitops-integration/soldesk') {
+                        sh 'git config --global user.email "eleys8596@naver.com"'
+                        sh 'git config --global user.name "rootssv"'
+                        sh 'git add deployment.yaml'
+                        sh '''
+                            if git commit -m "Updated Deployment Manifest"; then
+                                echo "Commit successful"
+                            else
+                                echo "Nothing to commit"
+                            fi
+                        '''
                     }
                 }
             }
