@@ -43,7 +43,7 @@ pipeline {
         stage("Push the changed deployment file to Git") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/gitops-ocr/soldesk') {
+                    dir('/home/jenkins/agent/workspace/gitops-integration/soldesk') {
                         sh """
                         git config --global user.email "eleys8596@naver.com"
                         git config --global user.name "rootssv"
