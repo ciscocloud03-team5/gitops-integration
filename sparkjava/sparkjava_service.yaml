@@ -8,7 +8,7 @@ spec:
     app: sparkjava-dev
   ports:
     - protocol: TCP
-      port: 6026
-      targetPort: 6026
+      port: 8080
+      targetPort: 8080
   # following deployment container port 
   # type: ClusterIP
