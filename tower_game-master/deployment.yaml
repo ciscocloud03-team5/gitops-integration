@@ -14,7 +14,7 @@ spec:
         app: towergame
     spec:
       containers:
-      - name: app2048
+      - name: towergame
         image: spear77/towergame
         ports:
         - containerPort: 6027   # EXPOSE PORT와 SYNC
