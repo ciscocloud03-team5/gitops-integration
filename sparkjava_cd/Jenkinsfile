@@ -44,7 +44,7 @@ pipeline {
         stage("Update the Deployment Tags") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava') {
+                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava_cd') {
                         sh """
                         pwd
                         ls -al
@@ -62,7 +62,7 @@ pipeline {
         stage("Push the changed deployment file to Git") {
             steps {
                 script {
-                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava') {
+                    dir('/home/jenkins/agent/workspace/gitops-sparkjava/sparkjava_cd') {
                         sh """
                         git config --global user.email "cjhcjh0429@gmail.com"
                         git config --global user.name "icebreakerrr"
@@ -70,7 +70,6 @@ pipeline {
                         ls -al
                         git pull origin cjh
                         git add sparkjava_deployment.yaml
-                        git add ../sparkjava@tmp/
                         git commit -m 'New Update Of Deployment'
                         git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                         """
