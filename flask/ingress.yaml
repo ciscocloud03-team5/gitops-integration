@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: flask-ingress
-  namespace: dev
+  namespace: flask
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -14,7 +14,8 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - http:
+    - host: flask.nuschool.store  
+      http:
         paths:
           - path: /
             pathType: Prefix
@@ -23,5 +24,4 @@ spec:
                 name: flask-service
                 port:
                   number: 8000
-      host: flask.nuschool.store
 
