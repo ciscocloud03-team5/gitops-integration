@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: ocr1
-          image: eleys7485/ocr-tttf:${IMAGE_TAG}
+          image: eleys7485/ocr-tttf:1.0.0-22
           ports:
             - containerPort: 8080
