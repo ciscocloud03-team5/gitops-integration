@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ocrttf-deployment
+  name: ocr-deployment
   namespace: dev
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ocr1
+      app: ocr
   template:
     metadata:
       labels:
-        app: ocr1
+        app: ocr
     spec:
       containers:
         - name: ocr
-          image: eleys7485/ocr-tttf:1.0.0-4
+          image: eleys7485/ocr-tf:1.0.0-34
           resources:
             limits:
               memory: "256Mi"
           ports:
-            - containerPort: 3000
+            - containerPort: 25565
