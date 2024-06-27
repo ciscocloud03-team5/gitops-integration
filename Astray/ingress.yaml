@@ -14,7 +14,8 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - http:
+    - host: astray.nuschool.store
+      http:
         paths:
           - path: /
             pathType: Prefix
@@ -23,4 +24,3 @@ spec:
                 name: astray-service
                 port:
                   number: 80
-	host: astray.nuschool.store
