@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mario
-        image: yunjin6121/mario-local:1.0.0-2
+        image: yunjin6121/mario-local:1.0.0-3
         ports:
         - containerPort: 8080
 
