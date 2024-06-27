@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: towergame
+  name: towergame-deploy
   namespace: app
 spec:
   replicas: 2
