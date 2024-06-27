@@ -37,7 +37,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
 
         stage("Push the changed deployment file to Git") {
             steps {
@@ -57,4 +57,5 @@ pipeline {
             }
         }
     }
+}
 }
