@@ -12,27 +12,13 @@ pipeline {
     }
     environment {
         APP_NAME = "sparkjava-app"
-        GIT_CREDENTIALS_ID = 'CJH_Github_Credential'
+        GIT_CREDENTIALS_ID = credentials('CJH_Github_Credential')  // Jenkins Credential ID
+        GIT_USERNAME = credentials('CJH_Github_Credential').username
+        GIT_PASSWORD = credentials('CJH_Github_Credential').password
     }
 
 
     stages {
-    //     stage('Checkout') {
-    //         steps {
-    //             script {
-    //                 // 기존의 checkout 스텝을 수정하여 새로운 브랜치로 변경합니다
-    //                 checkout([$class: 'GitSCM',
-    //                           branches: [[name: 'cjh']], // 여기서 'master'는 새로운 브랜치 이름입니다
-    //                           userRemoteConfigs: [[url: 'https://github.com/ciscocloud03-team5/gitops-integration']]])
-    //             }
-    //         }
-    //     }
-        // 다른 stages 추가 가능
-    
-    // post 블록 등 추가 가능
-
-
-        
         stage("Checkout from SCM") {
                steps {
                     sh 'pwd'
@@ -71,20 +57,21 @@ pipeline {
                         ls -al
                         git add sparkjava_deployment.yaml
                         git commit -m 'New Update Of Deployment'
-                        """
-                        // git add sparkjava_deployment.yaml 
-                        // git add ../sparkjava@tmp/                       
-                        withCredentials([usernamePassword(credentialsId: 'CJH_Github_Credential', gitToolName: 'Default')]) {
+                        """            
+
+                        withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS_ID, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) 
+                        {
+
                             sh """
                             git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                             """
-
-                    }
+    
                 }
             }
         }
     }
 }
+    }
 }
 
 // withCredentials([usernamePassword(credentialsId: 'CJH_Github_Credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) 
