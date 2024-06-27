@@ -22,6 +22,6 @@ spec:
               service:
                 name: flask-service
                 port:
-                  number: 5000
+                  number: 8000
       host: flask.nuschool.store
 
