@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: towergame-deploy
+  namespace: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: towergame
+  template:
+    metadata:
+      labels:
+        app: towergame
+    spec:
+      containers:
+      - name: app2048
+        image: spear77/towergame
+        ports:
+        - containerPort: 6026   # EXPOSE PORT와 SYNC
