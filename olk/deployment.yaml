@@ -20,4 +20,4 @@ spec:
             limits:
               memory: "256Mi"
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
