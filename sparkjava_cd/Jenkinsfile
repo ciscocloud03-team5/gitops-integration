@@ -75,7 +75,7 @@ pipeline {
                         """
                         // git add sparkjava_deployment.yaml 
                         // git add ../sparkjava@tmp/                       
-                        withCredentials([usernamePassword(credentialsId: 'CJH_Github_Credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        withCredentials([usernamePassword(credentialsId: 'CJH_Github_Credential', gitToolName: 'Default')]) {
                             sh """
                             git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                             """
@@ -87,3 +87,5 @@ pipeline {
     }
 }
 }
+
+// withCredentials([usernamePassword(credentialsId: 'CJH_Github_Credential', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) 
