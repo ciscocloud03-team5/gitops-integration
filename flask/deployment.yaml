@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: yunjin6121/flask-local:1.4-30
+          image: yunjin6121/flask-local:1.4-31
           resources:
             limits:
               memory: "256Mi"
