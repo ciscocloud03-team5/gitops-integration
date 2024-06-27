@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Astray-deployment
+  namespace: astray
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Astray
+  template:
+    metadata:
+      labels:
+        app: Astray
+    spec:
+      containers:
+      - name: Astray
+        image: yunjin6121/Astray-local:1.0.0-1
+        ports:
+        - containerPort: 80
+
