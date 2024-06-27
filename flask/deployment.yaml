@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-deploy
-  namespace: dev
+  name: flask
+  namespace: flask
 spec:
   replicas: 2
   selector:
@@ -15,10 +15,9 @@ spec:
     spec:
       containers:
         - name: flask
-          image: yunjin6121/flask:1.4-29
+          image: yunjin6121/flask-local:1.4-33
           resources:
             limits:
               memory: "256Mi"
           ports:
-            - containerPort: 5000
-
+            - containerPort: 8000

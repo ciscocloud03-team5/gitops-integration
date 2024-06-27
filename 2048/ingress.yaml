@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: 2048-ingress
-  namespace: dev
+  name: app2048-ingress
+  namespace: app
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -10,17 +10,17 @@ metadata:
     alb.ingress.kubernetes.io/subnets: subnet-06363e28795aaad69, subnet-0f76cf4c2c286f902
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:767397906204:certificate/c4db475c-a084-4e83-8b25-740af4e91841"
   labels:
-    app: 2048
+    app: app2048
 spec:
   ingressClassName: alb
   rules:
-    - http:
+    - host: app2048.nuschool.store  
+      http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: 2048-service
+                name: app2048-service
                 port:
                   number: 80
-	host: 2048.nuschool.store
