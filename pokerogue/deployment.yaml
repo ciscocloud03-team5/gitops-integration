@@ -18,10 +18,3 @@ spec:
         image: ksi05298/pokerogue-local:1.0.0-6
         ports:
         - containerPort: 8000
-        resources:
-          limits:
-            memory: "1.5Gi"
-            cpu: "1.5"
-          requests:
-            memory: "1Gi"
-            cpu: "1"
