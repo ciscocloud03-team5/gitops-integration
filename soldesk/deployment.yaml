@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ocr
-          image: eleys7485/ocr-tf:
+          image: eleys7485/ocr-tf:1.0.0-34
           resources:
             limits:
               memory: "256Mi"
