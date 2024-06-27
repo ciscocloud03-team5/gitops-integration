@@ -17,4 +17,4 @@ spec:
       - name: towergame
         image: spear77/towergame-dev
         ports:
-        - containerPort: 6027   # EXPOSE PORT와 SYNC
+        - containerPort: 8082   # EXPOSE PORT와 SYNC

@@ -8,6 +8,6 @@ spec:
     app: towergame
   ports:
     - protocol: TCP
-      port: 6027
-      targetPort: 6027
+      port: 8082
+      targetPort: 8082
   # type: ClusterIP
