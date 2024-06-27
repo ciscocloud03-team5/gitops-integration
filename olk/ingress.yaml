@@ -23,4 +23,4 @@ spec:
               service:
                 name: ocr1-service
                 port:
-                  number: 9500
+                  number: 8080
