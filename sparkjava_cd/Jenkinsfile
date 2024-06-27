@@ -14,7 +14,7 @@ pipeline {
         APP_NAME = "sparkjava-app"
         GIT_CREDENTIALS_ID = 'CJH_Github_Credential'  // Jenkins Credential ID
         GIT_USERNAME = icebreakerrr
-        GIT_PASSWORD = credentials('CJH_Github_Credential').password
+
     }
 
 
@@ -59,10 +59,11 @@ pipeline {
                         git commit -m 'New Update Of Deployment'
                         """            
 
-                        withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS_ID, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) 
+                        withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS_ID, gitToolName: 'Default') ]) 
                         {
-
                             sh """
+                            git config --global user.email "cjhcjh0429@gmail.com"
+                            git config --global user.name "icebreakerrr"
                             git push https://github.com/ciscocloud03-team5/gitops-integration.git cjh
                             """
     
