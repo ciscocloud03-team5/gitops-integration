@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ocr1-deployment
-  namespace: dev
+  namespace: app
 spec:
   replicas: 2
   selector:
@@ -20,4 +20,4 @@ spec:
             limits:
               memory: "256Mi"
           ports:
-            - containerPort: 9500
+            - containerPort: 8080
