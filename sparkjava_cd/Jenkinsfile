@@ -12,7 +12,10 @@ pipeline {
     }
     environment {
         APP_NAME = "sparkjava-app"
-        GIT_CREDENTIALS_ID = 'CJH_Github_Credential'  // Jenkins Credential ID
+    //    GIT_CREDENTIALS_ID = 'CJH_Github_Credential'  // Jenkins Credential ID
+        GIT_USERNAME = credentials('CJH_Github_Credential').username
+        GIT_PASSWORD = credentials('CJH_Github_Credential').password
+    
     }
 
 
