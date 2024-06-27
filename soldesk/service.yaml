@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flaskapp-service
+  name: ocr-service
   namespace: dev
   labels:
-    app: flaskapp 
+    app: ocr 
 spec:
   selector:
-    app: flaskapp
+    app: ocr
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 5000
+      targetPort: 5000
