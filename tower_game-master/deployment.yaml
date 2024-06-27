@@ -17,4 +17,4 @@ spec:
       - name: app2048
         image: spear77/towergame
         ports:
-        - containerPort: 6026   # EXPOSE PORT와 SYNC
+        - containerPort: 6027   # EXPOSE PORT와 SYNC
