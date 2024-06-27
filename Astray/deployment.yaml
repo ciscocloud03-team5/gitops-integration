@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: astray
-        image: yunjin6121/astray-local:1.0.0-1
+        image: yunjin6121/astray-local:1.0.0-2
         ports:
         - containerPort: 80
 
