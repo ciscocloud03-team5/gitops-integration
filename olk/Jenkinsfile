@@ -51,7 +51,7 @@ pipeline {
                         git commit -m "Updated Deployment Manifest"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
-                            sh "git push https://github.com/ciscocloud03-team5/gitops-integ ocr"
+                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
                         }
                     }
                 }
