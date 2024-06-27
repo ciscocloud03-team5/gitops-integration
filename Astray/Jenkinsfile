@@ -11,7 +11,7 @@ pipeline {
         }
     }
     environment {
-        APP_NAME = "Astray-local"
+        APP_NAME = "astray-local"
     }
 
     stages {
