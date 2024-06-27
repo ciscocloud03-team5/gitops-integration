@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ocr1-deployment
-  namespace: app
+  namespace: dev
 spec:
   replicas: 2
   selector:
