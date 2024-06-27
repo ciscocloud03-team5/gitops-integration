@@ -51,3 +51,10 @@ pipeline {
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integ
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
