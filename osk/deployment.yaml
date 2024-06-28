@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: ocrsk
-        image: ocr/ocrsk-local:
+        image: eleys7485/soldesk-local:1.21.6-33
         ports:
         - containerPort: 80
