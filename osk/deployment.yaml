@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocrsk-deployment
+  namespace: ocrsk
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ocrsk
+  template:
+    metadata:
+      labels:
+        app: ocrsk
+    spec:
+      containers:
+      - name: ocrsk
+        image: ocr/ocrsk-local:
+        ports:
+        - containerPort: 80
