@@ -19,7 +19,7 @@ pipeline {
                steps {
                     sh 'pwd'
                     sh 'ls -al'
-                    git branch: 'cjh', credentialsId: 'CJH_GITHUB_CREDENTIAL', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+                    git branch: 'cjh', credentialsId: 'CJH-GITHUB-CREDENTIAL', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
                }
         }
 
@@ -49,7 +49,7 @@ pipeline {
                         git add deployment.yaml
                         git commit -m "Updated Tower Game Deployment Manifest"
                         """
-                        withCredentials([gitUsernamePassword(credentialsId: 'CJH_GITHUB_CREDENTIAL', gitToolName: 'Default')]) {
+                        withCredentials([gitUsernamePassword(credentialsId: 'CJH-GITHUB-CREDENTIAL', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration cjh"
                         }
                     }
