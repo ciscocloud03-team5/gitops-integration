@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: towergame
-        image: spear77/towergame-dev:
+        image: spear77/towergame-dev
         ports:
         - containerPort: 8082   # EXPOSE PORT와 SYNC
