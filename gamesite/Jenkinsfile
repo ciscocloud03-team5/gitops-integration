@@ -11,7 +11,7 @@ pipeline {
         }
     }
     environment {
-        APP_NAME = "flask-app"
+        APP_NAME = "team5-gamesite"
     }
 
     stages {
