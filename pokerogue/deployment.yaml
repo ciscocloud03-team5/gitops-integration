@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: pokerogue
-        image: ksi05298/pokerogue-local:1.0.0-6
+        image: ksi05298/pokerogue-local:1.0.0-1
         ports:
         - containerPort: 8000
