@@ -17,4 +17,4 @@ spec:
         - name: ocr2
           image: eleys7485/soldesk-ocr:1.21.6-20
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
