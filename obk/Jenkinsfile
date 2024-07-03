@@ -50,7 +50,7 @@ pipeline {
                         git commit -m "Updated Deployment Manifest"
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'ocrhub', gitToolName: 'Default')]) {
-                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration obk"
+                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration ocr"
                         }
                     }
                 }
