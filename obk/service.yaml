@@ -8,6 +8,6 @@ spec:
     app: dev
   ports:
     - protocol: TCP
-      port: 25565
-      targetPort: 25565
+      port: 80
+      targetPort: 80
   type: ClusterIP
