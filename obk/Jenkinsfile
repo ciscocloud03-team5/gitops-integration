@@ -11,7 +11,7 @@ pipeline {
         }
     }
     environment {
-        APP_NAME = "ocr-soldesk"
+        APP_NAME = "soldesk-ocr"
     }
 
     stages {
