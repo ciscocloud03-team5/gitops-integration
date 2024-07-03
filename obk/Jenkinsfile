@@ -49,7 +49,7 @@ pipeline {
                         git add deployment.yaml
                         git commit -m "Updated Deployment Manifest"
                         """
-                        withCredentials([gitUsernamePassword(credentialsId: 'ocr', gitToolName: 'Default')]) {
+                        withCredentials([gitUsernamePassword(credentialsId: 'ocrhub', gitToolName: 'Default')]) {
                             sh "git push https://github.com/ciscocloud03-team5/gitops-integration obk"
                         }
                     }
