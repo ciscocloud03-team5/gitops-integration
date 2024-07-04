@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: astray-service
-  namespace: astray
+  namespace: dev
 spec:
   selector:
     app: astray
