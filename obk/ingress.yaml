@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: ocr2.nuschool.store  
+    - host: ocr5.nuschool.store  
       http:
         paths:
           - path: /
