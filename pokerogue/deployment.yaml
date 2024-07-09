@@ -24,4 +24,4 @@ spec:
             memory: "1.4Gi"
           limits:
             cpu: "1800m"
-            memory: "2.9Gi"
+            memory: "2.8Gi"
