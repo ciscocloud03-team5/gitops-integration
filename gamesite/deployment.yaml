@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: gamesite
-          image: ksi05298/team5-gamesite:1.0.0-6
+          image: ksi05298/team5-gamesite:1.0.0-7
           ports:
             - containerPort: 80
           resources:
