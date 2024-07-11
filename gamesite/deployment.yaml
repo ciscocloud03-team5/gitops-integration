@@ -18,10 +18,3 @@ spec:
           image: ksi05298/team5-gamesite:1.0.0-4
           ports:
             - containerPort: 80
-          resources:
-            requests:
-              cpu: "200m"
-              memory: "500Mi"
-            limits:
-              cpu: "200m"
-              memory: "500Mi"
