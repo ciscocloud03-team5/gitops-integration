@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ocr1-ingress
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: "shared-alb-group"
+    alb.ingress.kubernetes.io/subnets: subnet-06363e28795aaad69, subnet-0f76cf4c2c286f902
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:767397906204:certificate/c4db475c-a084-4e83-8b25-740af4e91841"
+  labels:
+    app: ocr
+spec:
+  ingressClassName: alb
+  rules:
+    - host: ocr1.nuschool.store  
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ocr1-service
+                port:
+                  number: 8080

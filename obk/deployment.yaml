@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocr2
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ocr2
+  template:
+    metadata:
+      labels:
+        app: ocr2
+    spec:
+      containers:
+        - name: ocr2
+          image: eleys7485/soldesk-ocr:1.21.6-34
+          ports:
+            - containerPort: 3000

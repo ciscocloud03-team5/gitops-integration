@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocr1
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ocr1
+  template:
+    metadata:
+      labels:
+        app: ocr1
+    spec:
+      containers:
+        - name: ocr1
+          image: eleys7485/ocr-tttf:1.0.0-24
+          ports:
+            - containerPort: 8080
