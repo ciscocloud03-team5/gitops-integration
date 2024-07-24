@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pokerogue-deployment
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pokerogue
+  template:
+    metadata:
+      labels:
+        app: pokerogue
+    spec:
+      containers:
+      - name: pokerogue
+        image: ksi05298/pokerogue-local:1.0.0-6
+        ports:
+        - containerPort: 8000
+        # # 리소스 최소 사양. 이것보다 작으면 504 에러
+        # resources:
+        #   requests:
+        #     cpu: "900m"
+        #     memory: "1.4Gi"
+        #   limits:
+        #     cpu: "1700m"
+        #     memory: "2.9Gi"

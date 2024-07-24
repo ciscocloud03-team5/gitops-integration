@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamesite
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gamesite
+  template:
+    metadata:
+      labels:
+        app: gamesite
+    spec:
+      containers:
+        - name: gamesite
+          image: ksi05298/team5-gamesite:1.0.0-7
+          ports:
+            - containerPort: 80
+          # resources:
+          #   requests:
+          #     cpu: "200m"
+          #     memory: "500Mi"
+          #   limits:
+          #     cpu: "200m"
+          #     memory: "500Mi"
