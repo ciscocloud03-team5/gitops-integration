@@ -1,0 +1,60 @@
+pipeline {
+    agent {
+        kubernetes {
+            cloud 'team5-eks'
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              serviceAccountName: jenkins-admin
+            """
+        }
+    }
+    environment {
+        APP_NAME = "mario-local"
+    }
+
+    stages {
+        stage("Checkout from SCM") {
+               steps {
+                    sh 'pwd'
+                    sh 'ls -al'
+                    git branch: 'yjk', credentialsId: 'yunjin6121', url: 'https://github.com/ciscocloud03-team5/gitops-integration'
+               }
+        }
+
+        stage("Update the Deployment Tags") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/gitops-mario/mario') {
+                        sh """
+                        pwd
+                        ls -al
+                        cat deployment.yaml
+                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                        cat deployment.yaml
+                        """
+                    }
+                }
+            }
+        }
+
+        stage("Push the changed deployment file to Git") {
+            steps {
+                script {
+                    dir('/home/jenkins/agent/workspace/gitops-mario/mario') {
+                        sh """
+                        git config --global user.email "yunjin6121@gmail.com"
+                        git config --global user.name "yunjin6121"
+                        git add deployment.yaml
+                        git commit -m "Updated Deployment Manifest"
+                        """
+                        withCredentials([gitUsernamePassword(credentialsId: 'yunjin6121', gitToolName: 'Default')]) {
+                            sh "git push https://github.com/ciscocloud03-team5/gitops-integration yjk"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
